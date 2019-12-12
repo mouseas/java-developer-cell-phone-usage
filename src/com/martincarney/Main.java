@@ -1,12 +1,29 @@
 package com.martincarney;
 
 import com.martincarney.model.*;
+
+import java.awt.print.PrinterJob;
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        Map<Integer, CellPhone> cellPhoneList = loadCellUsageData();
+
+        ReportPrinter rep = new ReportPrinter(cellPhoneList);
+
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(rep);
+
+        boolean doPrint = job.printDialog();
+
+        if (doPrint) {
+            job.print();
+        }
+    }
+
+    private static Map<Integer, CellPhone> loadCellUsageData() throws Exception {
         // load cell phones
         List<String[]> cellPhoneData = CSVReader.loadFile("CellPhone.csv");
         String[] mapping = cellPhoneData.get(0);
@@ -30,10 +47,7 @@ public class Main {
             }
         }
 
-        // print records grouped by cell phone
-        for (Map.Entry<Integer, CellPhone> entry : cellPhoneList.entrySet()) {
-            System.out.println(entry.getValue().toString());
-        }
+        return cellPhoneList;
     }
     
 }
