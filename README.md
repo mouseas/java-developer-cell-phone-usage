@@ -29,6 +29,7 @@ printer. The main things still needed are:
 #### Instructions
 
 Run `Main.main(args)` from the directory containing `CellPhone.csv` and 
-`CellPhoneUsageByMonth.csv`. Command-line arguments are ignored.
+`CellPhoneUsageByMonth.csv`. Command-line arguments are ignored. It'll prompt you
+to print, then send to the printer if you approve. I recommend printing to PDF.
 
 Programmed using IntelliJ IDEA as my IDE.
