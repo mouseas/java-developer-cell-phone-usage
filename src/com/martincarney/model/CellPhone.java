@@ -1,6 +1,7 @@
 package com.martincarney.model;
 
 import java.time.LocalDate;
+import java.util.*;
 
 public class CellPhone {
 
@@ -8,6 +9,7 @@ public class CellPhone {
     public String employeeName;
     public LocalDate purchaseDate;
     public String model;
+    public List<CellUsageRecord> usageRecords = new ArrayList<>();
 
     public CellPhone(String[] row, String[] mapping) {
         for (int i = 0; i < mapping.length && i < row.length; i++) {
@@ -34,6 +36,11 @@ public class CellPhone {
 
     @Override
     public String toString() {
-        return this.employeeId + ":" + this.employeeName + "\t" + this.model + "\t" + this.purchaseDate.toString();
+        StringBuilder sb = new StringBuilder(this.employeeId + ":" + this.employeeName + "\t" + this.model + "\t" + this.purchaseDate.toString());
+        for (int i = 0; i < usageRecords.size(); i++) {
+            CellUsageRecord rec = usageRecords.get(i);
+            sb.append("\r\n\t" + rec.toString());
+        }
+        return sb.toString();
     }
 }
