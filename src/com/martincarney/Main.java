@@ -7,15 +7,19 @@ import java.util.*;
 
 public class Main {
 
+    /**
+     * @throws Exception FileNotFound or IOException from loading CSV; PrinterException from printing
+     */
     public static void main(String[] args) throws Exception {
 
         Map<Integer, CellPhone> cellPhoneList = loadCellUsageData();
 
-        ReportPrinter rep = new ReportPrinter(cellPhoneList);
+        ReportPrinter repPrint = new ReportPrinter(cellPhoneList);
 
         PrinterJob job = PrinterJob.getPrinterJob();
-        job.setPrintable(rep);
+        job.setPrintable(repPrint);
 
+        // get user input; result is whether to print or not.
         boolean doPrint = job.printDialog();
 
         if (doPrint) {
@@ -23,6 +27,10 @@ public class Main {
         }
     }
 
+    /**
+     * @return Map of employeeId to their CellPhone record, including usage records for each phone.
+     * @throws Exception from CSVReader; FileNotFoundException or IOException
+     */
     private static Map<Integer, CellPhone> loadCellUsageData() throws Exception {
         // load cell phones
         List<String[]> cellPhoneData = CSVReader.loadFile("CellPhone.csv");

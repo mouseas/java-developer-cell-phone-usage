@@ -3,6 +3,9 @@ package com.martincarney.model;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Model of an employee's cell phone.
+ */
 public class CellPhone {
 
     public int employeeId;
@@ -11,6 +14,10 @@ public class CellPhone {
     public String model;
     public List<CellUsageRecord> usageRecords = new ArrayList<>();
 
+    /**
+     * @param row The row of data for this CellPhone
+     * @param mapping The first row of the CSV, tells us which index corresponds to which piece of info
+     */
     public CellPhone(String[] row, String[] mapping) {
         for (int i = 0; i < mapping.length && i < row.length; i++) {
             String colName = mapping[i];
@@ -21,6 +28,7 @@ public class CellPhone {
                 case "employeeName":
                     this.employeeName = value; break;
                 case "purchaseDate":
+                    // date string is formatted YYYYMMDD
                     int year = Integer.parseInt(value.substring(0,4));
                     int month = Integer.parseInt(value.substring(4,6));
                     int day = Integer.parseInt(value.substring(6));

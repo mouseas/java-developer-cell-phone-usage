@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 
+/**
+ * Generates a print-ready display of cell phone usage data
+ */
 public class ReportPrinter implements Printable {
 
     private static final double PAGE_MARGINS = 50;
@@ -24,7 +27,7 @@ public class ReportPrinter implements Printable {
     public ReportPrinter(Map<Integer, CellPhone> phoneData) {
         this.phoneData = new ArrayList<>();
 
-        // calculate header data
+        // calculate general summary data
         this.runDate = LocalDate.now();
         this.numPhones = phoneData.size();
         this.totalMinutes = 0;
@@ -40,6 +43,14 @@ public class ReportPrinter implements Printable {
         this.avgData = this.totalData / this.numPhones;
     }
 
+    /**
+     * Print or preview a general summary followed by rows of individual employee summaries
+     * @param graphics Graphics2D object we draw to
+     * @param pageFormat Tells us about page size
+     * @param pageIndex Which page to preview or print
+     * @return Whether the specified page exists; 0 it exists, 1 it does not.
+     * @throws PrinterException
+     */
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
         // TODO: determine number of pages based on number of phone users, taking the header on the first page into account.
@@ -92,10 +103,16 @@ public class ReportPrinter implements Printable {
         return PAGE_EXISTS;
     }
 
-    private float printHeader(Graphics2D g2d, PageFormat pf) {
+    /**
+     * Print a summary of the data at the beginning of the report
+     * @param g2d drawing input
+     * @param pf page size info; unused by this function
+     * @return y position to continue printing from, to avoid overlap
+     */
+    private float printHeader(Graphics2D g2d, @Deprecated PageFormat pf) {
         float y = 0;
 
-        /*
+        /* summary item order:
          *	Report Run Date
          *	Number of Phones
          *	Total Minutes
